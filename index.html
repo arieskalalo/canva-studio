@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canva Studio — Sign In</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="auth-page">
+
+  <div class="auth-container">
+    <div class="auth-brand">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="10" fill="#7C3AED"/>
+        <path d="M10 26L18 10L26 26" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13 21h10" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="auth-brand-name">Canva Studio</span>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="signin">Sign In</button>
+        <button class="auth-tab" data-tab="signup">Sign Up</button>
+      </div>
+
+      <!-- Sign In Form -->
+      <form id="signinForm" class="auth-form active">
+        <h2>Welcome back</h2>
+        <p class="auth-subtitle">Sign in to your design workspace</p>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="signinEmail" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signinPassword" placeholder="••••••••" required />
+        </div>
+        <div id="signinError" class="auth-error hidden"></div>
+        <button type="submit" class="btn-primary btn-full" id="signinBtn">
+          <span>Sign In</span>
+        </button>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form id="signupForm" class="auth-form">
+        <h2>Create account</h2>
+        <p class="auth-subtitle">Start designing for free</p>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signupName" placeholder="Your name" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="signupEmail" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signupPassword" placeholder="Min 6 characters" required />
+        </div>
+        <div id="signupError" class="auth-error hidden"></div>
+        <div id="signupSuccess" class="auth-success hidden"></div>
+        <button type="submit" class="btn-primary btn-full" id="signupBtn">
+          <span>Create Account</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

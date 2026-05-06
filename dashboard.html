@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canva Studio — Dashboard</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="dashboard-page">
+
+  <!-- Sidebar -->
+  <aside class="dash-sidebar">
+    <div class="dash-brand">
+      <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="10" fill="#7C3AED"/>
+        <path d="M10 26L18 10L26 26" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13 21h10" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span>Canva Studio</span>
+    </div>
+    <nav class="dash-nav">
+      <a href="dashboard.html" class="dash-nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        My Designs
+      </a>
+      <a href="#" class="dash-nav-item" id="brandKitNav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+        Brand Kits
+      </a>
+      <a href="#" class="dash-nav-item" id="crmNav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        CRM Import
+      </a>
+    </nav>
+    <div class="dash-sidebar-bottom">
+      <div class="dash-user">
+        <div class="dash-avatar" id="dashAvatar">U</div>
+        <div class="dash-user-info">
+          <span class="dash-user-name" id="dashUserName">Loading...</span>
+          <span class="dash-user-email" id="dashUserEmail"></span>
+        </div>
+      </div>
+      <button class="dash-signout" id="signOutBtn" title="Sign out">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="dash-main">
+    <div class="dash-header">
+      <div>
+        <h1>My Designs</h1>
+        <p class="dash-subtitle">Create, edit, and manage your graphics</p>
+      </div>
+      <button class="btn-primary" id="newDesignBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Design
+      </button>
+    </div>
+
+    <!-- New design modal trigger area -->
+    <div class="quick-sizes">
+      <h3>Quick Start</h3>
+      <div class="size-cards">
+        <div class="size-card" data-w="1080" data-h="1080" data-name="Instagram Post">
+          <div class="size-preview" style="aspect-ratio:1/1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <span>Instagram Post</span>
+          <small>1080 × 1080</small>
+        </div>
+        <div class="size-card" data-w="1920" data-h="1080" data-name="Presentation">
+          <div class="size-preview" style="aspect-ratio:16/9">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <span>Presentation</span>
+          <small>1920 × 1080</small>
+        </div>
+        <div class="size-card" data-w="1200" data-h="628" data-name="Facebook Cover">
+          <div class="size-preview" style="aspect-ratio:1200/628">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </div>
+          <span>Facebook Cover</span>
+          <small>1200 × 628</small>
+        </div>
+        <div class="size-card" data-w="1080" data-h="1920" data-name="Story">
+          <div class="size-preview" style="aspect-ratio:9/16">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>
+          </div>
+          <span>Story</span>
+          <small>1080 × 1920</small>
+        </div>
+        <div class="size-card" data-w="800" data-h="600" data-name="Custom">
+          <div class="size-preview" style="aspect-ratio:4/3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <span>Custom Size</span>
+          <small>Custom</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Designs grid -->
+    <div class="designs-section">
+      <h3>Recent Designs</h3>
+      <div class="designs-grid" id="designsGrid">
+        <div class="designs-loading" id="designsLoading">
+          <div class="spinner"></div>
+          <span>Loading designs...</span>
+        </div>
+      </div>
+      <div class="designs-empty hidden" id="designsEmpty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        <p>No designs yet. Create your first one!</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- New Design Modal -->
+  <div class="modal hidden" id="newDesignModal">
+    <div class="modal-backdrop" id="newDesignBackdrop"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>New Design</h3>
+        <button class="modal-close" id="newDesignClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Design Name</label>
+          <input type="text" id="newDesignName" placeholder="Untitled Design" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Width (px)</label>
+            <input type="number" id="newDesignW" value="800" min="100" max="5000" />
+          </div>
+          <div class="form-group">
+            <label>Height (px)</label>
+            <input type="number" id="newDesignH" value="600" min="100" max="5000" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="newDesignCancelBtn">Cancel</button>
+        <button class="btn-primary" id="createDesignBtn">Create Design</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canva Studio — Editor</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/editor.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="editor-page">
+
+  <!-- Top Bar -->
+  <header class="editor-topbar">
+    <div class="topbar-left">
+      <a href="dashboard.html" class="topbar-logo" title="Back to Dashboard">
+        <svg width="24" height="24" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="10" fill="#7C3AED"/>
+          <path d="M10 26L18 10L26 26" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13 21h10" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <input type="text" class="design-title-input" id="designTitleInput" value="Untitled Design" />
+    </div>
+    <div class="topbar-center">
+      <button class="topbar-btn" id="undoBtn" title="Undo (Ctrl+Z)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </button>
+      <button class="topbar-btn" id="redoBtn" title="Redo (Ctrl+Y)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+      </button>
+      <div class="topbar-divider"></div>
+      <select class="topbar-select" id="zoomSelect" title="Zoom">
+        <option value="0.25">25%</option>
+        <option value="0.5">50%</option>
+        <option value="0.75">75%</option>
+        <option value="1" selected>100%</option>
+        <option value="1.5">150%</option>
+        <option value="2">200%</option>
+      </select>
+      <div class="topbar-divider"></div>
+      <button class="topbar-btn" id="resizeCanvasBtn" title="Smart Resize">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+        Resize
+      </button>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" id="saveBtn" title="Save (Ctrl+S)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save
+      </button>
+      <div class="export-dropdown">
+        <button class="btn-primary topbar-export-btn" id="exportDropBtn">
+          Export
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="export-menu hidden" id="exportMenu">
+          <button data-format="png" class="export-option">PNG Image</button>
+          <button data-format="jpg" class="export-option">JPG Image</button>
+          <button data-format="svg" class="export-option">SVG Vector</button>
+          <button data-format="pdf" class="export-option">PDF Document</button>
+          <div class="export-divider"></div>
+          <button data-format="vidspark" class="export-option">Send to Vidspark</button>
+        </div>
+      </div>
+      <button class="topbar-btn" id="versionBtn" title="Design History">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="editor-body">
+
+    <!-- Left Toolbar -->
+    <aside class="editor-sidebar">
+      <!-- Tool buttons -->
+      <div class="tool-group">
+        <button class="tool-btn active" data-tool="select" title="Select (V)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-7 1-4 7z"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="text" title="Text (T)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="rect" title="Rectangle (R)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="circle" title="Circle (C)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="triangle" title="Triangle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4L2 20h20L12 4z"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="line" title="Line (L)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="19" x2="19" y2="5"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="draw" title="Pen / Draw (P)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="image" title="Upload Image (I)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <input type="file" id="imageUpload" accept="image/*" style="display:none" />
+        </button>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <!-- AI & Special -->
+      <div class="tool-group">
+        <button class="tool-btn" id="aiPanelBtn" title="AI Assistant">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span class="tool-label">AI</span>
+        </button>
+        <button class="tool-btn" id="mockupBtn" title="Mockup Wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+          <span class="tool-label">Mockup</span>
+        </button>
+        <button class="tool-btn" id="batchBtn" title="Batch Variants">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          <span class="tool-label">Batch</span>
+        </button>
+        <button class="tool-btn" id="brandKitBtn" title="Brand Kit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          <span class="tool-label">Brand</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Canvas Area -->
+    <div class="editor-canvas-wrap" id="canvasWrap">
+      <div class="canvas-stage" id="canvasStage">
+        <canvas id="mainCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Right Properties Panel -->
+    <aside class="editor-properties" id="propertiesPanel">
+
+      <!-- Canvas properties (default) -->
+      <div class="prop-section" id="canvasProps">
+        <h4>Canvas</h4>
+        <div class="prop-row">
+          <label>Width</label>
+          <div class="prop-input-group">
+            <input type="number" id="canvasW" value="800" />
+            <span>px</span>
+          </div>
+        </div>
+        <div class="prop-row">
+          <label>Height</label>
+          <div class="prop-input-group">
+            <input type="number" id="canvasH" value="600" />
+            <span>px</span>
+          </div>
+        </div>
+        <div class="prop-row">
+          <label>Background</label>
+          <div class="color-swatch-row">
+            <input type="color" id="canvasBg" value="#ffffff" class="color-input" />
+            <input type="text" id="canvasBgHex" value="#ffffff" class="hex-input" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Object properties (shown when object selected) -->
+      <div class="prop-section hidden" id="objectProps">
+        <h4 id="objPropsTitle">Object</h4>
+
+        <!-- Position & Size -->
+        <div class="prop-group-label">Position & Size</div>
+        <div class="prop-row">
+          <label>X</label>
+          <input type="number" id="objX" class="prop-input-sm" />
+        </div>
+        <div class="prop-row">
+          <label>Y</label>
+          <input type="number" id="objY" class="prop-input-sm" />
+        </div>
+        <div class="prop-row">
+          <label>W</label>
+          <input type="number" id="objW" class="prop-input-sm" />
+        </div>
+        <div class="prop-row">
+          <label>H</label>
+          <input type="number" id="objH" class="prop-input-sm" />
+        </div>
+        <div class="prop-row">
+          <label>Angle</label>
+          <input type="number" id="objAngle" class="prop-input-sm" min="0" max="360" />
+        </div>
+        <div class="prop-row">
+          <label>Opacity</label>
+          <input type="range" id="objOpacity" min="0" max="1" step="0.01" value="1" class="prop-range" />
+        </div>
+
+        <!-- Fill (non-text) -->
+        <div id="fillProps">
+          <div class="prop-group-label">Fill</div>
+          <div class="prop-row">
+            <label>Color</label>
+            <div class="color-swatch-row">
+              <input type="color" id="objFill" value="#7C3AED" class="color-input" />
+              <input type="text" id="objFillHex" value="#7C3AED" class="hex-input" />
+            </div>
+          </div>
+          <div class="prop-row">
+            <label>Stroke</label>
+            <div class="color-swatch-row">
+              <input type="color" id="objStroke" value="#000000" class="color-input" />
+              <input type="number" id="objStrokeW" value="0" min="0" max="50" class="prop-input-sm" placeholder="Width" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Text properties -->
+        <div id="textProps" class="hidden">
+          <div class="prop-group-label">Text</div>
+          <div class="prop-row">
+            <label>Font</label>
+            <select id="fontFamily" class="prop-select">
+              <option>Inter</option>
+              <option>Arial</option>
+              <option>Georgia</option>
+              <option>Courier New</option>
+              <option>Times New Roman</option>
+              <option>Verdana</option>
+              <option>Impact</option>
+              <option>Trebuchet MS</option>
+              <option>Palatino</option>
+            </select>
+          </div>
+          <div class="prop-row">
+            <label>Size</label>
+            <input type="number" id="fontSize" value="24" min="6" max="300" class="prop-input-sm" />
+          </div>
+          <div class="prop-row">
+            <label>Color</label>
+            <div class="color-swatch-row">
+              <input type="color" id="textColor" value="#000000" class="color-input" />
+              <input type="text" id="textColorHex" value="#000000" class="hex-input" />
+            </div>
+          </div>
+          <div class="prop-row">
+            <label>Style</label>
+            <div class="text-style-btns">
+              <button class="style-btn" id="boldBtn" title="Bold"><b>B</b></button>
+              <button class="style-btn" id="italicBtn" title="Italic"><i>I</i></button>
+              <button class="style-btn" id="underlineBtn" title="Underline"><u>U</u></button>
+            </div>
+          </div>
+          <div class="prop-row">
+            <label>Align</label>
+            <div class="text-style-btns">
+              <button class="style-btn" data-align="left" title="Left">
+                <svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M2 4h12v1H2zm0 3h9v1H2zm0 3h12v1H2zm0 3h9v1H2z"/></svg>
+              </button>
+              <button class="style-btn" data-align="center" title="Center">
+                <svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M2 4h12v1H2zm2 3h8v1H4zm-2 3h12v1H2zm2 3h8v1H4z"/></svg>
+              </button>
+              <button class="style-btn" data-align="right" title="Right">
+                <svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M2 4h12v1H2zm5 3h7v1H7zm-5 3h12v1H2zm5 3h7v1H7z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="prop-row">
+            <label>Line H</label>
+            <input type="number" id="lineHeight" value="1.2" min="0.5" max="5" step="0.1" class="prop-input-sm" />
+          </div>
+        </div>
+
+        <!-- Image properties -->
+        <div id="imageProps" class="hidden">
+          <div class="prop-group-label">Image</div>
+          <button class="btn-secondary btn-block" id="bgRemoveBtn">Remove Background</button>
+          <div class="prop-row" id="bgRemoveStatus" style="display:none">
+            <span class="status-text">Processing...</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="prop-group-label">Arrange</div>
+        <div class="arrange-btns">
+          <button class="arrange-btn" id="bringFrontBtn" title="Bring to Front">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M3 16V5a2 2 0 0 1 2-2h11"/></svg>
+          </button>
+          <button class="arrange-btn" id="sendBackBtn" title="Send to Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="13" height="13" rx="2"/><path d="M8 8h13a2 2 0 0 1 2 2v11"/></svg>
+          </button>
+          <button class="arrange-btn" id="flipHBtn" title="Flip Horizontal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M4 7l4 5-4 5M20 7l-4 5 4 5"/></svg>
+          </button>
+          <button class="arrange-btn" id="flipVBtn" title="Flip Vertical">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M7 4l5 4 5-4M7 20l5-4 5 4"/></svg>
+          </button>
+          <button class="arrange-btn danger" id="deleteObjBtn" title="Delete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+
+        <!-- Pen stroke width when draw mode -->
+        <div id="drawProps" class="hidden">
+          <div class="prop-group-label">Brush</div>
+          <div class="prop-row">
+            <label>Size</label>
+            <input type="range" id="brushSize" min="1" max="50" value="5" class="prop-range" />
+          </div>
+          <div class="prop-row">
+            <label>Color</label>
+            <input type="color" id="brushColor" value="#000000" class="color-input" />
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <!-- Layers Panel -->
+  <div class="layers-panel" id="layersPanel">
+    <div class="layers-header">
+      <span>Layers</span>
+      <button class="layers-toggle" id="layersToggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+    <div class="layers-list" id="layersList"></div>
+  </div>
+
+  <!-- AI Panel Modal -->
+  <div class="panel-modal hidden" id="aiModal">
+    <div class="panel-modal-header">
+      <h3>AI Assistant</h3>
+      <button class="modal-close" id="aiModalClose">&times;</button>
+    </div>
+    <div class="panel-modal-body">
+      <div class="ai-tabs">
+        <button class="ai-tab active" data-ai="layout">Layout</button>
+        <button class="ai-tab" data-ai="copy">Copywriter</button>
+        <button class="ai-tab" data-ai="image">Image Gen</button>
+      </div>
+
+      <!-- Layout Generator -->
+      <div class="ai-panel active" id="aiLayout">
+        <p class="ai-desc">Describe your design and AI will generate a layout.</p>
+        <textarea id="layoutPrompt" placeholder="e.g. A modern Instagram post for a coffee shop with bold title, description, and call-to-action button..." rows="4"></textarea>
+        <button class="btn-primary btn-full" id="generateLayoutBtn">Generate Layout</button>
+        <div class="ai-result hidden" id="layoutResult"></div>
+      </div>
+
+      <!-- Copywriter -->
+      <div class="ai-panel" id="aiCopy">
+        <p class="ai-desc">Generate text for selected text element or a new one.</p>
+        <div class="form-group">
+          <label>Brand/Topic</label>
+          <input type="text" id="copyBrand" placeholder="e.g. coffee shop, tech startup..." />
+        </div>
+        <div class="form-group">
+          <label>Tone</label>
+          <select id="copyTone">
+            <option>Professional</option>
+            <option>Casual</option>
+            <option>Bold</option>
+            <option>Playful</option>
+            <option>Luxury</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select id="copyType">
+            <option>Headline</option>
+            <option>Tagline</option>
+            <option>Call-to-Action</option>
+            <option>Description</option>
+            <option>Social Caption</option>
+          </select>
+        </div>
+        <button class="btn-primary btn-full" id="generateCopyBtn">Generate Copy</button>
+        <div class="ai-result hidden" id="copyResult">
+          <div id="copyOptions"></div>
+        </div>
+      </div>
+
+      <!-- Image Generator -->
+      <div class="ai-panel" id="aiImageGen">
+        <p class="ai-desc">Generate images using AI (powered by Pollinations — free, no API key).</p>
+        <textarea id="imagePrompt" placeholder="e.g. A serene mountain landscape at sunset, photorealistic..." rows="3"></textarea>
+        <div class="form-group">
+          <label>Style</label>
+          <select id="imageStyle">
+            <option value="">Photorealistic</option>
+            <option value="digital art">Digital Art</option>
+            <option value="watercolor">Watercolor</option>
+            <option value="oil painting">Oil Painting</option>
+            <option value="3d render">3D Render</option>
+            <option value="flat illustration">Flat Illustration</option>
+            <option value="sketch">Sketch</option>
+          </select>
+        </div>
+        <button class="btn-primary btn-full" id="generateImageBtn">Generate Image</button>
+        <div class="ai-result hidden" id="imageGenResult">
+          <img id="generatedImg" src="" alt="Generated" />
+          <button class="btn-secondary btn-full" id="addGeneratedImg">Add to Canvas</button>
+        </div>
+        <div class="ai-loading hidden" id="imageGenLoading">
+          <div class="spinner"></div>
+          <span>Generating image...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mockup Panel -->
+  <div class="panel-modal hidden" id="mockupModal">
+    <div class="panel-modal-header">
+      <h3>Mockup Wrapper</h3>
+      <button class="modal-close" id="mockupClose">&times;</button>
+    </div>
+    <div class="panel-modal-body">
+      <p class="ai-desc">Wrap your design in a device or frame mockup.</p>
+      <div class="mockup-grid" id="mockupGrid">
+        <div class="mockup-item" data-mockup="phone">
+          <div class="mockup-preview phone-frame">
+            <div class="mockup-screen"></div>
+          </div>
+          <span>Phone</span>
+        </div>
+        <div class="mockup-item" data-mockup="tablet">
+          <div class="mockup-preview tablet-frame">
+            <div class="mockup-screen"></div>
+          </div>
+          <span>Tablet</span>
+        </div>
+        <div class="mockup-item" data-mockup="laptop">
+          <div class="mockup-preview laptop-frame">
+            <div class="mockup-screen"></div>
+          </div>
+          <span>Laptop</span>
+        </div>
+        <div class="mockup-item" data-mockup="billboard">
+          <div class="mockup-preview billboard-frame">
+            <div class="mockup-screen"></div>
+          </div>
+          <span>Billboard</span>
+        </div>
+        <div class="mockup-item" data-mockup="tshirt">
+          <div class="mockup-preview tshirt-frame">
+            <svg viewBox="0 0 80 80" fill="#ddd" width="60"><path d="M20 10 L10 25 L22 30 L22 65 L58 65 L58 30 L70 25 L60 10 L50 20 Q40 28 30 20 Z"/></svg>
+          </div>
+          <span>T-Shirt</span>
+        </div>
+        <div class="mockup-item" data-mockup="poster">
+          <div class="mockup-preview poster-frame">
+            <div class="mockup-screen"></div>
+          </div>
+          <span>Poster</span>
+        </div>
+      </div>
+      <button class="btn-primary btn-full" id="applyMockupBtn">Apply Mockup</button>
+    </div>
+  </div>
+
+  <!-- Batch Variants Modal -->
+  <div class="modal hidden" id="batchModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3>Batch Variant Generator</h3>
+        <button class="modal-close" id="batchClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Generate multiple design variants by replacing text/colors. Enter values comma-separated.</p>
+        <div class="form-group">
+          <label>Headline Variants (comma-separated)</label>
+          <input type="text" id="batchHeadlines" placeholder="Summer Sale, Winter Deals, Spring Offers" />
+        </div>
+        <div class="form-group">
+          <label>Background Colors (comma-separated hex)</label>
+          <input type="text" id="batchColors" placeholder="#FF5733, #3498DB, #2ECC71" />
+        </div>
+        <div class="form-group">
+          <label>Export format</label>
+          <select id="batchFormat">
+            <option value="png">PNG (download all)</option>
+            <option value="save">Save to Designs</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="batchCancelBtn">Cancel</button>
+        <button class="btn-primary" id="runBatchBtn">Generate Variants</button>
+      </div>
+      <div class="batch-progress hidden" id="batchProgress">
+        <div class="batch-progress-bar" id="batchProgressBar"></div>
+        <span id="batchProgressText">Generating 0/0...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brand Kit Panel -->
+  <div class="panel-modal hidden" id="brandKitModal">
+    <div class="panel-modal-header">
+      <h3>Brand Kit</h3>
+      <button class="modal-close" id="brandKitClose">&times;</button>
+    </div>
+    <div class="panel-modal-body">
+      <div class="form-group">
+        <label>Brand Colors</label>
+        <div class="brand-colors" id="brandColors"></div>
+        <button class="btn-secondary btn-sm" id="addBrandColor">+ Add Color</button>
+      </div>
+      <div class="form-group">
+        <label>Brand Fonts</label>
+        <div class="brand-fonts" id="brandFonts"></div>
+        <select id="addFontSelect" class="prop-select">
+          <option value="">Choose font to add...</option>
+          <option>Inter</option><option>Arial</option><option>Georgia</option>
+          <option>Impact</option><option>Verdana</option><option>Trebuchet MS</option>
+        </select>
+        <button class="btn-secondary btn-sm" id="addBrandFont">+ Add Font</button>
+      </div>
+      <div class="form-group">
+        <label>Brand Logo</label>
+        <div id="brandLogoPreview" class="brand-logo-preview">No logo uploaded</div>
+        <input type="file" id="brandLogoUpload" accept="image/*" style="display:none" />
+        <button class="btn-secondary btn-sm" id="uploadLogoBtn">Upload Logo</button>
+        <button class="btn-secondary btn-sm" id="addLogoToCanvas" style="display:none">Add to Canvas</button>
+      </div>
+      <button class="btn-primary btn-full" id="saveBrandKitBtn">Save Brand Kit</button>
+    </div>
+  </div>
+
+  <!-- Resize Modal -->
+  <div class="modal hidden" id="resizeModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Smart Resize Canvas</h3>
+        <button class="modal-close" id="resizeClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Scale your design to a new size. Objects will be repositioned proportionally.</p>
+        <div class="size-cards resize-presets">
+          <div class="size-card" data-w="1080" data-h="1080">
+            <span>Instagram Post</span><small>1080×1080</small>
+          </div>
+          <div class="size-card" data-w="1920" data-h="1080">
+            <span>Presentation</span><small>1920×1080</small>
+          </div>
+          <div class="size-card" data-w="1080" data-h="1920">
+            <span>Story</span><small>1080×1920</small>
+          </div>
+          <div class="size-card" data-w="1200" data-h="628">
+            <span>Facebook</span><small>1200×628</small>
+          </div>
+          <div class="size-card" data-w="2480" data-h="3508">
+            <span>A4 Portrait</span><small>2480×3508</small>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Custom Width</label>
+            <input type="number" id="resizeW" placeholder="px" />
+          </div>
+          <div class="form-group">
+            <label>Custom Height</label>
+            <input type="number" id="resizeH" placeholder="px" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="resizeCancelBtn">Cancel</button>
+        <button class="btn-primary" id="applyResizeBtn">Apply Resize</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Version History Modal -->
+  <div class="modal hidden" id="versionModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3>Design History</h3>
+        <button class="modal-close" id="versionClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="version-actions">
+          <input type="text" id="versionName" placeholder="Snapshot name (e.g. Client Review)" />
+          <button class="btn-secondary" id="saveVersionBtn">Save Snapshot</button>
+        </div>
+        <div class="versions-list" id="versionsList">
+          <div class="versions-empty">No saved snapshots yet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast hidden" id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/tools.js"></script>
+  <script src="js/properties.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/brand-kit.js"></script>
+  <script src="js/versions.js"></script>
+  <script src="js/batch.js"></script>
+  <script src="js/mockup.js"></script>
+  <script src="js/ai.js"></script>
+</body>
+</html>
